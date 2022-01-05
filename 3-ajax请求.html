@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise封装ajax</title>
+</head>
+<body>
+<h2>promise 封装 ajax</h2>
+<button id="btn">点击触发ajax请求</button>
+</body>
+<script>
+<!--    接口地址-->
+//    获取元素对象
+const btn = document.querySelector("#btn")
+btn.addEventListener("click",()=>{
+    const P = new Promise((resolve, reject)=>{
+        //  1.创建对象,指定响应数据类型
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = 'json'
+        //   2.初始化
+        xhr.open("GET","https://api.apiopen.top/getJoke")
+        // 3.发送
+        xhr.send()
+        // 4.处理响应结果
+        xhr.onreadystatechange = function (){
+            if (xhr.readyState === 4) {
+                //  判断响应状态码
+                if(xhr.status >=200 && xhr.status < 300){
+                    //  成功  控制台输出响应体
+                    resolve(xhr.response)
+                }else{
+                    //  失败  控制台输出响应状态码
+                    reject(xhr.status)
+                }
+            }
+        }
+    })
+    //  调用then方法
+    P.then(value=>{
+        console.log(value)
+    },reason => {
+        console.warn(reason)
+    })
+
+
+})
+</script>
+</html>

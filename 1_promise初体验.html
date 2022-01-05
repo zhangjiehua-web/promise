@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖</title>
+</head>
+<body>
+<h1>promise 初体验</h1>
+<button id="btn">点击抽奖</button>
+</body>
+<script>
+    function rand(m,n){
+        return Math.ceil(Math.random()*(n-m+1))+m-1
+    }
+    /*
+    * 点击按钮 两秒后弹出是否中奖，30%概率中奖
+    * 若中奖 弹出 恭喜您中奖了
+    * 若为中奖 弹出 再接再厉
+    * */
+    const btn = document.querySelector('#btn')
+    btn.addEventListener('click',()=>{
+        // 定时器 回调函数实现
+        // setTimeout(()=>{
+        //     let n = rand(1,100)
+        //     if (n <= 30) {
+        //         alert("恭喜您中奖了")
+        //     }else{
+        //         alert("再接再厉")
+        //     }
+        // },2000)
+
+        // promise实现
+        //resolve 解决 函数类型的数据，异步热任务成功时调用
+        //reject 拒绝 函数类型的数据，异步任务失败时调用
+        const p = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                let n = rand(1,100)
+                if (n <= 30) {
+                    resolve(n)//将promise对象的状态设置为【成功】
+                }else{
+                    reject(n)//将promise对象的状态设置为【失败】
+                }
+            },2000)
+        })
+        //调用then方法
+        p.then((value)=>{
+            alert("恭喜您中奖了,您的中奖数字为"+value)
+        },(reason)=>{
+            alert("再接再厉,您的数字为"+reason)
+        })
+    })
+</script>
+</html>
