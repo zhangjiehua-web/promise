@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise自定义封装</title>
+    <script src="zidingyi.js"></script>
+</head>
+<body>
+<script>
+    const P = new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve("ok")
+        },1000)
+    })
+    P.then(value => {
+        console.log(value)
+    },reason => {
+        console.warn(reason)
+    })
+
+    console.log(P)
+</script>
+</body>
+</html>
